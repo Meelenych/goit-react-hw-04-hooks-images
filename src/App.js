@@ -4,21 +4,21 @@ import ImageGallery from "./components/ImageGallery/ImageGallery";
 import styles from "./App.module.css";
 
 export default function App() {
-  //   state = {
-  //     images: [],
-  //     submitValue: "",
-  //   };
+	//   state = {
+	//     images: [],
+	//     submitValue: "",
+	//   };
 
-  const [submitValue, setSubmitValue] = useState("");
+	const [submitValue, setSubmitValue] = useState("");
 
-  const onFormSubmit = (data) => {
-    setSubmitValue({ submitValue: data });
-  };
+	const onFormSubmit = (data) => {
+		setSubmitValue(data);
+	};
 
-  return (
-    <div className={styles.App}>
-      <SearchBar onFormSubmit={onFormSubmit} />
-      <ImageGallery submitValue={submitValue} />
-    </div>
-  );
+	return (
+		<div className={styles.App}>
+			<SearchBar onFormSubmit={onFormSubmit} />
+			<ImageGallery submitValue={submitValue} />
+		</div>
+	);
 }
