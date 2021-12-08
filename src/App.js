@@ -1,24 +1,24 @@
-import { Component } from "react";
+import { useState } from "react";
 import SearchBar from "./components/SearchBar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import styles from "./App.module.css";
 
-export default class App extends Component {
-  state = {
-    images: [],
-    submitValue: "",
+export default function App() {
+  //   state = {
+  //     images: [],
+  //     submitValue: "",
+  //   };
+
+  const [submitValue, setSubmitValue] = useState("");
+
+  const onFormSubmit = (data) => {
+    setSubmitValue({ submitValue: data });
   };
 
-  onFormSubmit = (data) => {
-    this.setState({ submitValue: data });
-  };
-
-  render() {
-    return (
-      <div className={styles.App}>
-        <SearchBar onFormSubmit={this.onFormSubmit} />
-        <ImageGallery submitValue={this.state.submitValue} />
-      </div>
-    );
-  }
+  return (
+    <div className={styles.App}>
+      <SearchBar onFormSubmit={onFormSubmit} />
+      <ImageGallery submitValue={submitValue} />
+    </div>
+  );
 }
