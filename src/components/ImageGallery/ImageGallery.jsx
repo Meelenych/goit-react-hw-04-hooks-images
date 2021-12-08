@@ -28,7 +28,7 @@ class ImageGallery extends Component {
 
 			fetchApi(searchQuery, page)
 				.then((results) => {
-					console.log(fetchApi);
+					// console.log(fetchApi);
 					this.setState({
 						images: [...results.hits],
 					});
