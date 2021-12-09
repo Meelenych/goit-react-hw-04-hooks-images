@@ -19,11 +19,11 @@ export default function ImageGallery({ submitValue }) {
 	useEffect(() => {
 		if (submitValue !== "") {
 			setLoading(true);
+			reset();
 			fetchApi(submitValue, page)
 				.then((results) => {
 					if (page === 1) {
 						setImages([...results.hits]);
-						console.log(results.hits);
 					} else {
 						setImages([...images, ...results.hits]);
 					}
@@ -46,6 +46,18 @@ export default function ImageGallery({ submitValue }) {
 	const loadMore = () => {
 		setPage(page + 1);
 	};
+
+	const reset = () => {
+		setImages([]);
+		setPage(1);
+	};
+
+	useEffect(() => {
+		window.scrollTo({
+			top: document.documentElement.scrollHeight,
+			behavior: "smooth",
+		});
+	});
 
 	const bigImageSetState = (largeImageURL) => {
 		setLargeImageURL(largeImageURL);
