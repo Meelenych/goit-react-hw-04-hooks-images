@@ -17,17 +17,17 @@ export default function ImageGallery({ submitValue }) {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
+		if (submitValue === "") {
+			return;
+		}
 		if (submitValue !== "") {
 			setLoading(true);
-			fetchApi(submitValue, page)
+			setPage(1);
+			fetchApi(submitValue, 1)
 				.then((results) => {
-					if (page === 1) {
-						setImages([...results.hits]);
-					} else {
-						setImages([...images, ...results.hits]);
-					}
+					setImages([...results.hits]);
 
-					if (results.hits.length >= 1) {
+					if (results.hits.length >= 1 && page <= 1) {
 						toast.success("Search successfull!");
 					} else if (results.hits.length === 0) {
 						toast.error("Oops, nothing found!");
@@ -39,17 +39,35 @@ export default function ImageGallery({ submitValue }) {
 				})
 				.finally(() => setLoading(false));
 		}
-		reset();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [page, submitValue]);
+	}, [submitValue]);
+
+	//для лоадмор
+	useEffect(() => {
+		if (page !== 1) {
+			setLoading(true);
+			fetchApi(submitValue, page)
+				.then((results) => {
+					setImages([...images, ...results.hits]);
+
+					if (results.hits.length >= 1 && page > 1) {
+						toast.success("More results successfully loaded!");
+					} else if (results.hits.length === 0 && page > 1) {
+						toast.error("Oops, nothing more!");
+					}
+				})
+				.catch((err) => {
+					toast.error("Fetch error!");
+					console.log(err);
+				})
+				.finally(() => setLoading(false));
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [page]);
 
 	const loadMore = () => {
 		setPage(page + 1);
-	};
-
-	const reset = () => {
-		// setImages([]);
-		setPage(1);
 	};
 
 	useEffect(() => {
