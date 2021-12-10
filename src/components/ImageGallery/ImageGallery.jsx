@@ -19,7 +19,6 @@ export default function ImageGallery({ submitValue }) {
 	useEffect(() => {
 		if (submitValue !== "") {
 			setLoading(true);
-			reset();
 			fetchApi(submitValue, page)
 				.then((results) => {
 					if (page === 1) {
@@ -40,6 +39,7 @@ export default function ImageGallery({ submitValue }) {
 				})
 				.finally(() => setLoading(false));
 		}
+		reset();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page, submitValue]);
 
@@ -48,7 +48,7 @@ export default function ImageGallery({ submitValue }) {
 	};
 
 	const reset = () => {
-		setImages([]);
+		// setImages([]);
 		setPage(1);
 	};
 
